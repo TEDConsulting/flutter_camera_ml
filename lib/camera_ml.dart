@@ -18,6 +18,11 @@ class CameraMLPageState extends State<CameraMLPage> {
   final highlightedBoxes = <RectanglePainter>[];
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildBody(),
@@ -36,6 +41,7 @@ class CameraMLPageState extends State<CameraMLPage> {
     print(info.image.height);
     print(info.image.width);
     imageInfo = info;
+    _findText();
   }
 
   _findText() async {
@@ -52,6 +58,7 @@ class CameraMLPageState extends State<CameraMLPage> {
         print(textLine.boundingBox.topLeft);
         highlightedBoxes.add(
           RectanglePainter(
+            text: textLine.text,
             start: Offset(
               MediaQuery.of(context).size.width /
                   (imageInfo.image.width /
@@ -84,15 +91,6 @@ class CameraMLPageState extends State<CameraMLPage> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
       )..image.resolve(ImageConfiguration()).addListener(_resolveImage),
-      Positioned(
-        bottom: 0.0,
-        left: 0.0,
-        right: 0.0,
-        child: RaisedButton(
-          child: Text('Find Text'),
-          onPressed: _findText,
-        ),
-      ),
     ]);
 
     if (highlightedBoxes.isNotEmpty) {
@@ -109,30 +107,17 @@ class CameraMLPageState extends State<CameraMLPage> {
 
     return widgets;
   }
-
-  _findFaces() async {
-    final FirebaseVisionImage image = FirebaseVisionImage.fromFile(widget.file);
-    final FaceDetector faceDetector = FirebaseVision.instance.faceDetector();
-    final List<Face> faces = await faceDetector.detectInImage(image);
-    _highlightFaces(faces);
-  }
-
-  _highlightFaces(List<Face> faces) {
-    if (faces != null) {
-      faces.forEach((face) {
-        FaceLandmark faceLandmark = face.getLandmark(FaceLandmarkType.leftEye);
-      });
-    }
-  }
 }
 
 class RectanglePainter extends CustomPainter {
   Offset start;
   final Offset end;
+  final String text;
 
   RectanglePainter({
     this.start,
     this.end,
+    this.text,
   });
 
   @override
@@ -148,6 +133,24 @@ class RectanglePainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2.0,
     );
+
+    TextSpan textSpan = TextSpan(
+      style: TextStyle(
+        color: Colors.green,
+        fontSize: 12.0,
+        fontWeight: FontWeight.bold,
+      ),
+      text: text,
+    );
+
+    //Draw text
+    TextPainter tp = TextPainter(
+      text: textSpan,
+      textAlign: TextAlign.left,
+      textDirection: TextDirection.ltr,
+    );
+    tp.layout();
+    tp.paint(canvas, Offset(start.dx, end.dy));
   }
 
   @override

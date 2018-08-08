@@ -47,4 +47,8 @@ class HomePageState extends State<HomePage> {
       );
     }
   }
+
+  Widget _buildOptionCard(VoidCallback onPressed, Color colorOne, Color colorSecond) {
+
+  }
 }
