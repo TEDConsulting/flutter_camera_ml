@@ -14,6 +14,9 @@ class CameraMLPage extends StatefulWidget {
 }
 
 class CameraMLPageState extends State<CameraMLPage> {
+  ImageInfo imageInfo;
+  final highlightedBoxes = <RectanglePainter>[];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,25 +27,15 @@ class CameraMLPageState extends State<CameraMLPage> {
   _buildBody() {
     return Container(
       child: Stack(
-        children: <Widget>[
-          Image.file(
-            widget.file,
-            fit: BoxFit.cover,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-          ),
-          Positioned(
-            bottom: 0.0,
-            left: 0.0,
-            right: 0.0,
-            child: RaisedButton(
-              child: Text('Find Text'),
-              onPressed: _findText,
-            ),
-          ),
-        ],
+        children: _buildStackChildren(),
       ),
     );
+  }
+
+  _resolveImage(ImageInfo info, bool _) {
+    print(info.image.height);
+    print(info.image.width);
+    imageInfo = info;
   }
 
   _findText() async {
@@ -56,8 +49,65 @@ class CameraMLPageState extends State<CameraMLPage> {
     textBlocks.forEach((textBlock) {
       textBlock.lines.forEach((textLine) {
         print(textLine.text);
+        print(textLine.boundingBox.topLeft);
+        highlightedBoxes.add(
+          RectanglePainter(
+            start: Offset(
+              MediaQuery.of(context).size.width /
+                  (imageInfo.image.width /
+                      textLine.boundingBox.topLeft.x.toDouble()),
+              MediaQuery.of(context).size.height /
+                  (imageInfo.image.height /
+                      textLine.boundingBox.topLeft.y.toDouble()),
+            ),
+            end: Offset(
+              MediaQuery.of(context).size.width /
+                  (imageInfo.image.width /
+                      textLine.boundingBox.bottomRight.x.toDouble()),
+              MediaQuery.of(context).size.height /
+                  (imageInfo.image.height /
+                      textLine.boundingBox.bottomRight.y.toDouble()),
+            ),
+          ),
+        );
+        setState(() {});
       });
     });
+  }
+
+  List<Widget> _buildStackChildren() {
+    var widgets = <Widget>[];
+    widgets.addAll([
+      Image.file(
+        widget.file,
+        fit: BoxFit.fill,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+      )..image.resolve(ImageConfiguration()).addListener(_resolveImage),
+      Positioned(
+        bottom: 0.0,
+        left: 0.0,
+        right: 0.0,
+        child: RaisedButton(
+          child: Text('Find Text'),
+          onPressed: _findText,
+        ),
+      ),
+    ]);
+
+    if (highlightedBoxes.isNotEmpty) {
+      highlightedBoxes.forEach(
+        (rectangle) {
+          widgets.add(
+            CustomPaint(
+              painter: rectangle,
+            ),
+          );
+        },
+      );
+    }
+
+    return widgets;
   }
 
   _findFaces() async {
@@ -73,5 +123,35 @@ class CameraMLPageState extends State<CameraMLPage> {
         FaceLandmark faceLandmark = face.getLandmark(FaceLandmarkType.leftEye);
       });
     }
+  }
+}
+
+class RectanglePainter extends CustomPainter {
+  Offset start;
+  final Offset end;
+
+  RectanglePainter({
+    this.start,
+    this.end,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    print('Painting');
+    print(start);
+    print(end);
+    //start = Offset(100.0, 100.0);
+    canvas.drawRect(
+      Rect.fromPoints(start, end),
+      Paint()
+        ..color = Colors.green
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2.0,
+    );
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
   }
 }
