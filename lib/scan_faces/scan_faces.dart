@@ -61,19 +61,27 @@ class ScanFacesPageState extends State<ScanFacesPage> {
     for (int i = 0; i < faces.length; i++) {
       print('Cropping face');
       var face = faces[i];
+      var fileProperties = await FlutterNativeImage.getImageProperties(widget.file.path);
+      print(face.boundingBox.topLeft);
+      print(face.boundingBox.topRight);
+      print(face.boundingBox.bottomLeft);
+      print(face.boundingBox.bottomRight);
       int x = face.boundingBox.topLeft.x;
       int y = face.boundingBox.topLeft.y;
-      int width = face.boundingBox.topLeft.x - face.boundingBox.topRight.x;
-      int height = face.boundingBox.topRight.y - face.boundingBox.bottomRight.y;
+      int width = face.boundingBox.topRight.x - face.boundingBox.topLeft.x;
+      int height = face.boundingBox.bottomLeft.y - face.boundingBox.topLeft.y;
       if (x < 0) x = 0;
       if (y < 0) y = 0;
+      if ((x + width) > fileProperties.width) {
+        width = fileProperties.width - x;
+      }
       croppedImages.add(
         await FlutterNativeImage.cropImage(
           widget.file.path,
           x,
           y,
-          width * -1,
-          height * -1,
+          width,
+          height,
         ),
       );
     }

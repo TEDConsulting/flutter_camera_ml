@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54416d52-01c5-4af7-8f4c-326836c5aca1" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/scan_barcode/barcode_list.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/scan_barcode/barcode_model.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/scan_barcode/scan_barcode.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/scan_faces/scan_faces.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/scan_faces/scan_faces.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,11 +29,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="scan_barcode.dart" pinned="false" current-in-tab="true">
+      <file leaf-file-name="scan_barcode.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/scan_barcode/scan_barcode.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="485">
-              <caret line="71" column="25" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="25" />
+            <state relative-caret-position="463">
+              <caret line="143" lean-forward="true" selection-start-line="143" selection-end-line="143" />
+              <folding>
+                <element signature="e#0#17#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="scan_faces.dart" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/scan_faces/scan_faces.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="301">
+              <caret line="66" column="40" selection-start-line="66" selection-start-column="40" selection-end-line="66" selection-end-column="40" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -49,7 +57,7 @@
         <entry file="file://$PROJECT_DIR$/lib/scan_text/text_list.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="567">
-              <caret line="21" lean-forward="true" selection-end-line="63" />
+              <caret line="21" selection-end-line="63" />
               <folding>
                 <element signature="e#0#53#0" expanded="true" />
               </folding>
@@ -107,11 +115,11 @@
         <option value="$PROJECT_DIR$/lib/common/rectangle_painter.dart" />
         <option value="$PROJECT_DIR$/lib/scan_text/scan_text.dart" />
         <option value="$PROJECT_DIR$/pubspec.yaml" />
-        <option value="$PROJECT_DIR$/lib/scan_faces/scan_faces.dart" />
         <option value="$PROJECT_DIR$/lib/home.dart" />
         <option value="$PROJECT_DIR$/lib/scan_barcode/barcode_model.dart" />
         <option value="$PROJECT_DIR$/lib/scan_barcode/barcode_list.dart" />
         <option value="$PROJECT_DIR$/lib/scan_barcode/scan_barcode.dart" />
+        <option value="$PROJECT_DIR$/lib/scan_faces/scan_faces.dart" />
       </list>
     </option>
   </component>
@@ -143,6 +151,12 @@
               <item name="camera_ml" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
               <item name="scan_barcode" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="camera_ml" type="b2602c69:ProjectViewProjectNode" />
+              <item name="camera_ml" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="scan_faces" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="camera_ml" type="b2602c69:ProjectViewProjectNode" />
@@ -253,7 +267,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="0" />
       <window_info anchor="bottom" id="Android Profiler" order="1" />
@@ -454,16 +467,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/scan_faces/scan_faces.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="74" column="21" lean-forward="true" selection-start-line="74" selection-start-column="21" selection-end-line="74" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pubspec.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -508,7 +511,7 @@
     <entry file="file://$PROJECT_DIR$/lib/scan_text/text_list.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="567">
-          <caret line="21" lean-forward="true" selection-end-line="63" />
+          <caret line="21" selection-end-line="63" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
           </folding>
@@ -531,8 +534,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/scan_barcode/scan_barcode.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="485">
-          <caret line="71" column="25" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="25" />
+        <state relative-caret-position="463">
+          <caret line="143" lean-forward="true" selection-start-line="143" selection-end-line="143" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/scan_faces/scan_faces.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="66" column="40" selection-start-line="66" selection-start-column="40" selection-end-line="66" selection-end-column="40" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
           </folding>
