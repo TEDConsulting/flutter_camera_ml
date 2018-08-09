@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:camera_ml/scan_barcode/scan_barcode.dart';
 import 'package:camera_ml/scan_faces/scan_faces.dart';
 import 'package:camera_ml/scan_text/scan_text.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,8 @@ class HomePageState extends State<HomePage> {
           ),
           Expanded(
             child: _buildOptionCard(
-              () => print('Scan Text'),
+              () =>
+                  _startScanPage((context, file) => ScanBarcodePage(file: file)),
               const Color(0xFF2D5E7D),
               const Color(0xFF417493),
               "Scan Barcodes",
@@ -49,20 +51,12 @@ class HomePageState extends State<HomePage> {
           ),
           Expanded(
             child: _buildOptionCard(
-              () => _startScanPage((context, file) => ScanFacesPage(file: file)),
+              () =>
+                  _startScanPage((context, file) => ScanFacesPage(file: file)),
               Colors.orange[800],
               Colors.orange[400],
               "Find Faces",
               Icons.face,
-            ),
-          ),
-          Expanded(
-            child: _buildOptionCard(
-              () => print('Scan Text'),
-              const Color(0xFF7C2AE9),
-              const Color(0xFF7C2AE9),
-              "Scan Text",
-              Icons.format_color_text,
             ),
           ),
         ],
