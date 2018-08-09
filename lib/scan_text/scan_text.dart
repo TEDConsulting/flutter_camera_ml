@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 
-class CameraMLPage extends StatefulWidget {
+class ScanTextPage extends StatefulWidget {
   final File file;
 
-  CameraMLPage({
+  ScanTextPage({
     @required this.file,
   }) : assert(file != null);
 
@@ -13,7 +13,7 @@ class CameraMLPage extends StatefulWidget {
   State<StatefulWidget> createState() => CameraMLPageState();
 }
 
-class CameraMLPageState extends State<CameraMLPage> {
+class CameraMLPageState extends State<ScanTextPage> {
   ImageInfo imageInfo;
   final highlightedBoxes = <RectanglePainter>[];
 

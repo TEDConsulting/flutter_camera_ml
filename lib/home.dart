@@ -1,4 +1,4 @@
-import 'package:camera_ml/camera_ml.dart';
+import 'package:camera_ml/scan_text/scan_text.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -73,7 +73,7 @@ class HomePageState extends State<HomePage> {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) {
-            return CameraMLPage(file: imageFile);
+            return ScanTextPage(file: imageFile);
           },
         ),
       );
