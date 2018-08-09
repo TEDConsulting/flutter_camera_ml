@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
       title: 'Camera ML',
       theme: new ThemeData(
         primarySwatch: Colors.grey,
+        scaffoldBackgroundColor: Colors.white,
       ),
       home: HomePage(),
       debugShowCheckedModeBanner: false,

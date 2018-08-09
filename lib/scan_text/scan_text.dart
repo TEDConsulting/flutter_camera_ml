@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:camera_ml/scan_text/text_list.dart';
+import 'package:camera_ml/scan_text/text_model.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +20,7 @@ class CameraMLPageState extends State<ScanTextPage> {
   final highlightedBoxes = <RectanglePainter>[];
   bool isTextScanInitiated = false;
   bool isTextScanComplete = false;
+  final scannedTexts = <TextModel>[];
 
   @override
   void initState() {
@@ -62,6 +65,12 @@ class CameraMLPageState extends State<ScanTextPage> {
   _highlightText(List<TextBlock> textBlocks) async {
     textBlocks.forEach((textBlock) {
       textBlock.lines.forEach((textLine) {
+        scannedTexts.add(
+          TextModel(
+            text: textLine.text,
+          ),
+        );
+
         print(textLine.text);
         print(textLine.boundingBox.topLeft);
         highlightedBoxes.add(
@@ -128,7 +137,7 @@ class CameraMLPageState extends State<ScanTextPage> {
       borderRadius: BorderRadius.all(Radius.circular(40.0)),
       color: Colors.white,
       child: InkWell(
-        onTap: () {},
+        onTap: isTextScanComplete ? _startScannedTextPage : null,
         child: Container(
           padding: EdgeInsets.all(16.0),
           child: Center(
@@ -154,6 +163,18 @@ class CameraMLPageState extends State<ScanTextPage> {
                   ),
           ),
         ),
+      ),
+    );
+  }
+
+  _startScannedTextPage() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) {
+          return ScannedTextList(
+            scannedTexts: scannedTexts,
+          );
+        },
       ),
     );
   }
