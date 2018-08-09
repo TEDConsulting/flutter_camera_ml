@@ -16,6 +16,8 @@ class ScanTextPage extends StatefulWidget {
 class CameraMLPageState extends State<ScanTextPage> {
   ImageInfo imageInfo;
   final highlightedBoxes = <RectanglePainter>[];
+  bool isTextScanInitiated = false;
+  bool isTextScanComplete = false;
 
   @override
   void initState() {
@@ -41,7 +43,10 @@ class CameraMLPageState extends State<ScanTextPage> {
     print(info.image.height);
     print(info.image.width);
     imageInfo = info;
-    _findText();
+    if (!isTextScanInitiated) {
+      isTextScanInitiated = true;
+      _findText();
+    }
   }
 
   _findText() async {
@@ -49,6 +54,9 @@ class CameraMLPageState extends State<ScanTextPage> {
     final TextDetector textDetector = FirebaseVision.instance.textDetector();
     final List<TextBlock> textBlocks = await textDetector.detectInImage(image);
     _highlightText(textBlocks);
+    setState(() {
+      isTextScanComplete = true;
+    });
   }
 
   _highlightText(List<TextBlock> textBlocks) async {
@@ -91,6 +99,12 @@ class CameraMLPageState extends State<ScanTextPage> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
       )..image.resolve(ImageConfiguration()).addListener(_resolveImage),
+      Positioned(
+        bottom: 16.0,
+        right: 40.0,
+        left: 40.0,
+        child: _buildAllTextButton(),
+      )
     ]);
 
     if (highlightedBoxes.isNotEmpty) {
@@ -107,6 +121,42 @@ class CameraMLPageState extends State<ScanTextPage> {
 
     return widgets;
   }
+
+  Widget _buildAllTextButton() {
+    return Material(
+      elevation: 6.0,
+      borderRadius: BorderRadius.all(Radius.circular(40.0)),
+      color: Colors.white,
+      child: InkWell(
+        onTap: () {},
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          child: Center(
+            child: isTextScanComplete
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'See All Scanned Texts',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                        ),
+                      ),
+                      Icon(
+                        Icons.chevron_right,
+                      ),
+                    ],
+                  )
+                : SizedBox(
+                    height: 24.0,
+                    width: 24.0,
+                    child: CircularProgressIndicator(),
+                  ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class RectanglePainter extends CustomPainter {
@@ -122,10 +172,6 @@ class RectanglePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    print('Painting');
-    print(start);
-    print(end);
-    //start = Offset(100.0, 100.0);
     canvas.drawRect(
       Rect.fromPoints(start, end),
       Paint()
