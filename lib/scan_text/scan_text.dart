@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:camera_ml/common/rectangle_painter.dart';
 import 'package:camera_ml/scan_text/text_list.dart';
 import 'package:camera_ml/scan_text/text_model.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
@@ -177,51 +178,5 @@ class CameraMLPageState extends State<ScanTextPage> {
         },
       ),
     );
-  }
-}
-
-class RectanglePainter extends CustomPainter {
-  Offset start;
-  final Offset end;
-  final String text;
-
-  RectanglePainter({
-    this.start,
-    this.end,
-    this.text,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    canvas.drawRect(
-      Rect.fromPoints(start, end),
-      Paint()
-        ..color = Colors.green
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2.0,
-    );
-
-    TextSpan textSpan = TextSpan(
-      style: TextStyle(
-        color: Colors.green,
-        fontSize: 12.0,
-        fontWeight: FontWeight.bold,
-      ),
-      text: text,
-    );
-
-    //Draw text
-    TextPainter tp = TextPainter(
-      text: textSpan,
-      textAlign: TextAlign.left,
-      textDirection: TextDirection.ltr,
-    );
-    tp.layout();
-    tp.paint(canvas, Offset(start.dx, end.dy));
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
   }
 }

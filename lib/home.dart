@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:camera_ml/scan_faces/scan_faces.dart';
 import 'package:camera_ml/scan_text/scan_text.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,7 +31,7 @@ class HomePageState extends State<HomePage> {
         children: <Widget>[
           Expanded(
             child: _buildOptionCard(
-              () => _startScanText(),
+              () => _startScanPage((context, file) => ScanTextPage(file: file)),
               const Color(0xFFA10BF4),
               const Color(0xFFCA6FF5),
               "Scan Text",
@@ -46,7 +49,7 @@ class HomePageState extends State<HomePage> {
           ),
           Expanded(
             child: _buildOptionCard(
-              () => print('Scan Text'),
+              () => _startScanPage((context, file) => ScanFacesPage(file: file)),
               Colors.orange[800],
               Colors.orange[400],
               "Find Faces",
@@ -67,13 +70,13 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  _startScanText() async {
+  _startScanPage(StatefulWidget Function(BuildContext, File file) build) async {
     var imageFile = await ImagePicker.pickImage(source: ImageSource.camera);
     if (imageFile != null) {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) {
-            return ScanTextPage(file: imageFile);
+            return build(context, imageFile);
           },
         ),
       );
