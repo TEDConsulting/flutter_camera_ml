@@ -30,6 +30,25 @@ class HomePageState extends State<HomePage> {
       width: MediaQuery.of(context).size.width,
       child: Column(
         children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(bottom: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "Flutter App with Firebase ML Kit",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Image.asset(
+                  "images/firebase_icon.png",
+                  width: 20.0,
+                ),
+              ],
+            ),
+          ),
           Expanded(
             child: _buildOptionCard(
               () => _startScanPage((context, file) => ScanTextPage(file: file)),
@@ -41,8 +60,8 @@ class HomePageState extends State<HomePage> {
           ),
           Expanded(
             child: _buildOptionCard(
-              () =>
-                  _startScanPage((context, file) => ScanBarcodePage(file: file)),
+              () => _startScanPage(
+                  (context, file) => ScanBarcodePage(file: file)),
               const Color(0xFF2D5E7D),
               const Color(0xFF417493),
               "Scan Barcodes",

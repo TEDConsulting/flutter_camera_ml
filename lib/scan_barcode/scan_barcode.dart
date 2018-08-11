@@ -53,19 +53,26 @@ class ScanBarcodePageState extends State<ScanBarcodePage> {
 
   _findText() async {
     final FirebaseVisionImage image = FirebaseVisionImage.fromFile(widget.file);
+    BarcodeDetectorOptions options = BarcodeDetectorOptions(barcodeFormats: BarcodeFormat.all);
     final BarcodeDetector barcodeDetector =
-        FirebaseVision.instance.barcodeDetector();
+        FirebaseVision.instance.barcodeDetector(options);
     final List<Barcode> barcodes = await barcodeDetector.detectInImage(image);
+    print("Result Received");
     print(barcodes);
-    _highlightText(barcodes);
+    if(barcodes != null && barcodes.isNotEmpty) {
+      _highlightBarcodes(barcodes);
+    }
     setState(() {
       isTextScanComplete = true;
     });
   }
 
-  _highlightText(List<Barcode> barcodes) async {
+  _highlightBarcodes(List<Barcode> barcodes) async {
+    print("Looping barcodes");
     barcodes.forEach((barcode) {
+      print("Adding barcode");
       scannedBarcodes.add(BarcodeModel(rawData: barcode.rawValue));
+      print("Barcode added");
       setState(() {});
     });
     if (scannedBarcodes.isNotEmpty) {
